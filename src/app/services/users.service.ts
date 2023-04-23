@@ -9,6 +9,7 @@ import { User } from '../models/user.model';
 export class UsersService {
 
   users: BehaviorSubject<User[]> = new BehaviorSubject([new User()]);
+  selectedUserId: BehaviorSubject<number> = new BehaviorSubject(-1);
 
   constructor(private http: HttpClient) { }
 

@@ -1,9 +1,12 @@
-<section class="login">
-    <input type="text" placeholder="User Name" [formControl]="userName">
+<form class="login-form">
     <br>
-    <input type="text" placeholder="Email" [formControl]="email">
-
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="User Name" [formControl]="userName">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" [formControl]="email">
+    </mat-form-field>
     <br>
     <button mat-raised-button color="accent" (click)="login()">Login</button>
-</section>
-    
+</form>

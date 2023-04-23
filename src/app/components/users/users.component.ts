@@ -4,6 +4,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { User } from '../../models/user.model';
 import * as _ from 'lodash-es';
 import { Subscription } from 'rxjs';
+import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +19,7 @@ export class UsersComponent implements OnDestroy {
 
   usersSubscription: Subscription;
 
-  constructor(public usersService: UsersService) {
+  constructor(private usersService: UsersService, private postsService: PostsService) {
     this.usersSubscription = this.usersService.users
       .subscribe(u => {
         const users = (u as any[]).map(user => {
@@ -46,10 +47,12 @@ export class UsersComponent implements OnDestroy {
     this.displayedColumns = this.displayedColumns.concat(Object.keys(user.address)).concat(companyKeys);
 
     this.columnNames = this.displayedColumns.map(i => ({ id: i, value: _.upperFirst(i) }));
+  
+    this.postsService.loadPosts();
   }
 
-  getPostsByUserId(id: string): void {
-    console.log(id);
+  selectUser(id: number): void {
+    this.usersService.selectedUserId.next(id);
   }
 
   ngOnDestroy(): void {

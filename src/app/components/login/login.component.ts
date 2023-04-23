@@ -25,7 +25,7 @@ export class LoginComponent {
     if (this.users.find(uu => uu.username == this.userName.value && uu.email == this.email.value)) {
       this.route.navigate(['/users']);
     } else {
-alert("false")
+      alert("The username or email is incorrect")
     }
 
   }

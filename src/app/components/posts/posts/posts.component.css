@@ -1,0 +1,17 @@
+.posts {
+    width: 20vw;
+    height: 100vh;
+    padding: 5px;
+    overflow: scroll;
+}
+
+.post {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.post .title {
+    font-weight: 700;
+}
