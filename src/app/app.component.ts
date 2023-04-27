@@ -9,7 +9,4 @@ import { UsersService } from './services/users.service';
 export class AppComponent {
   title = 'myProject';
 
-  constructor(private userService: UsersService) {
-    this.userService.loadUsers();
-  }
 }

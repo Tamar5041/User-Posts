@@ -1,62 +1,32 @@
-import { Component, OnDestroy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
-import { User } from '../../models/user.model';
 import * as _ from 'lodash-es';
-import { Subscription } from 'rxjs';
 import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class UsersComponent implements OnDestroy {
+export class UsersComponent {
+
+  @Output() selectUser: EventEmitter<number> = new EventEmitter();
 
   dataSource: any;
   columnNames: any[];
   displayedColumns: any[];
 
-  usersSubscription: Subscription;
-
   constructor(private usersService: UsersService, private postsService: PostsService) {
-    this.usersSubscription = this.usersService.users
-      .subscribe(u => {
-        const users = (u as any[]).map(user => {
-          const address = user.address;
-          address.geo = `lat: ${address.geo.lat}, lng: ${address.geo.lng}`;
-
-          const company = user.company;
-          company.companyName = company.name;
-          delete company.name;
-
-          delete user.address;
-          delete user.company;
-
-          return { ...user, ...address, ...company };
-        });
-
-        this.dataSource = new MatTableDataSource(users);
-      });
-
-    const user = new User();
-    this.displayedColumns = Object.keys(user);
-    this.displayedColumns = this.displayedColumns.filter(c => !['address', 'company'].includes(c));
-
-    const companyKeys = Object.keys(user.company).map(k => k === 'name' ? 'companyName' : k);
-    this.displayedColumns = this.displayedColumns.concat(Object.keys(user.address)).concat(companyKeys);
-
+    this.dataSource = usersService.getUsersDataSource();
+    this.displayedColumns = usersService.getUsersDisplayedColumns();
     this.columnNames = this.displayedColumns.map(i => ({ id: i, value: _.upperFirst(i) }));
   
     this.postsService.loadPosts();
   }
 
-  selectUser(id: number): void {
-    this.usersService.selectedUserId.next(id);
-  }
-
-  ngOnDestroy(): void {
-    this.usersSubscription.unsubscribe();
+  emitSelectUser(id: number): void {
+    this.selectUser.emit(id);
   }
 
 }

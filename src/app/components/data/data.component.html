@@ -1,0 +1,9 @@
+<div class="data">
+    <app-users [class.wide]="userId < 0"
+        (selectUser)="userId = $event">
+    </app-users>
+
+    <app-posts *ngIf="userId >= 0"
+        [userId]="userId">
+    </app-posts>
+</div>

@@ -1,16 +1,10 @@
-<mat-drawer-container class="example-container" autosize>
-
-  <mat-drawer #drawer class="example-sidenav" mode="side" disableClose="false" position="end">
-    <app-posts></app-posts>
-  </mat-drawer>
-
+<div class="users">
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element[column.id]}}</mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row (click)="drawer.open(); selectUser(row.id);" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row (click)="emitSelectUser(row.id)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
-</mat-drawer-container>
+</div>

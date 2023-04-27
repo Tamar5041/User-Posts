@@ -1,0 +1,9 @@
+<div class="posts">
+    <ng-container *ngIf="userPosts.length">
+        <div *ngFor="let post of userPosts"
+            class="post">
+            <div class="title">{{ post.title }}</div>
+            <div class="body">{{ post.body }}</div>
+        </div>
+    </ng-container>
+</div>
